@@ -1,0 +1,54 @@
+stages:
+  - build
+  - train
+  - deploy
+
+variables:
+  DOCKER_IMAGE_NAME: devops-1-get-started
+
+build_artifacts:
+  stage: build
+  image: docker:dind
+  services:
+    - docker:dind
+  script:
+    - echo "Build a Docker image"
+    # Build and tag a Docker image
+    - docker pull hello-world
+    - docker image tag hello-world:latest $DOCKER_IMAGE_NAME:latest
+    - echo $(docker images)
+    # Archive the Docker image
+    - docker save -o docker-$DOCKER_IMAGE_NAME.tar $DOCKER_IMAGE_NAME:latest  
+  artifacts:
+    paths:
+      - docker-$DOCKER_IMAGE_NAME.tar  # Archive the Docker image
+      
+test_code:
+  stage: build
+  needs: [build_artifacts]
+  script:
+    - echo "Test Docker image exists"
+    # Run test - print OK if the Docker image archive exists
+    - ls
+    - if ls | grep docker-$DOCKER_IMAGE_NAME.tar; then echo "OK"; else echo "NOT OK"; fi
+    - echo "Test job is complete"
+
+train_model:
+  stage: train
+  script:
+    - echo "This job trains a new model"
+    # Simulate training by copying model.joblib to the model directory
+    - echo "Training model..."
+    - touch model.joblib
+    - echo "Model train is complete"
+  artifacts:
+    paths:
+      - model.joblib  # Archive the model file
+
+deploy_model:
+  stage: deploy
+  script:
+    - echo "This job deploys a model"
+    # Use the model.joblib from the artifacts
+    - ls 
+    - echo "Model deploy is complete"

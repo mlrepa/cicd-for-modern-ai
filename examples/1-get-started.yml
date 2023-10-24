@@ -1,3 +1,5 @@
+# Example from examples/1-get-started.yml
+
 stages:
   - build
   - train
