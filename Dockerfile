@@ -17,8 +17,8 @@ ENV PATH="/root/.cargo/bin:$PATH"
 # Copy pyproject.toml first for better caching
 COPY pyproject.toml .
 
-# Install dependencies using uv
-RUN uv pip install --system -e .
+# Install dependencies using uv with proper pyproject.toml reference
+RUN /root/.cargo/bin/uv pip install --system --requirement pyproject.toml
 
 # Copy application code
 COPY . .
