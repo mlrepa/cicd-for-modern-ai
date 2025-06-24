@@ -77,6 +77,47 @@ Let's break down the core components of a workflow file:
 
 By combining these components, you can define a complete MLOps pipeline, where each `job` represents a distinct stage like building, testing, training, or deploying your model.
 
+
+Excellent idea. Adding a summary of the actions used provides a quick reference and encourages deeper learning. Here is the summary section you can add to the end of your tutorial.
+
+---
+
+### Key GitHub Actions Used in This Tutorial
+
+This tutorial leverages several powerful, community-maintained actions to build our MLOps pipelines. Understanding what they do is key to customizing and extending your own workflows.
+
+**[actions/checkout](https://github.com/actions/checkout)**
+-   **Purpose:** This is the most fundamental action in almost every workflow. Its primary job is to **check out your repository's code** into the workflow's runner environment, so your job can access your scripts, source files, and other repository content.
+-   **When to use:** Use this as the first step in any job that needs to work with your codebase.
+
+**[actions/setup-python](https://github.com/actions/setup-python)**
+-   **Purpose:** Configures the runner with a **specific version of Python**. This ensures that your code runs in a consistent and predictable Python environment, which is crucial for reproducibility.
+-   **When to use:** Use this in any job that needs to run Python scripts or install Python packages. It should typically run after `actions/checkout`.
+
+**[astral-sh/setup-uv](https://github.com/astral-sh/setup-uv)**
+-   **Purpose:** Installs `uv`, an extremely fast, next-generation Python package manager. `uv` can be used as a drop-in replacement for `pip` and `pip-tools`, offering significant speed improvements for dependency installation.
+-   **When to use:** Use this to set up a modern and efficient Python packaging tool. It's especially useful in CI/CD where installation speed directly impacts how quickly you get feedback.
+
+**[actions/upload-artifact](https://github.com/actions/upload-artifact) & [actions/download-artifact](https://github.**com/actions/download-artifact)
+-   **Purpose:** These two actions work together to **pass files between jobs** within the same workflow. `upload-artifact` saves files (like trained models, test reports, or evaluation metrics) from one job, and `download-artifact` retrieves them in a later job.
+-   **When to use:** This is essential for any multi-stage pipeline where the output of one job is the input for another. For MLOps, this is how you pass a trained model from a `train` job to an `evaluate` or `deploy` job.
+
+**[actions/cache](https://github.com/actions/cache)**
+-   **Purpose:** Caches dependencies and other files to **speed up workflow runs**. It stores specified directories (like the `pip` cache) and restores them on subsequent runs, avoiding the need to re-download dependencies every time.
+-   **When to use:** Use this in any job that has a time-consuming setup step, such as installing many Python packages. This can dramatically reduce the time it takes for your CI pipeline to complete.
+
+**[docker/login-action](https://github.com/docker/login-action)**
+-   **Purpose:** Securely **logs into a Docker container registry**, such as Docker Hub or GitHub Container Registry (GHCR).
+-   **When to use:** Use this before any step that needs to push or pull private Docker images. It's a best practice for securely authenticating with your registry.
+
+**[docker/metadata-action](https://github.com/docker/metadata-action)**
+-   **Purpose:** Automatically **generates meaningful tags and labels for your Docker images** based on Git context (e.g., branch names, tags, commit SHAs). This eliminates manual tagging and ensures your images are versioned in a consistent and traceable way.
+-   **When to use:** A must-have for any serious Docker workflow. It makes your container-based MLOps pipeline much more robust and easier to manage.
+
+**[docker/build-push-action](https://github.com/docker/build-push-action)**
+-   **Purpose:** A powerful, all-in-one action that **builds a Docker image and pushes it to a container registry**. It integrates seamlessly with the other Docker actions and supports advanced features like multi-platform builds and caching.
+-   **When to use:** This is the core action for containerizing your ML application. It combines the `docker build` and `docker push` commands into a single, configurable step.
+
 ---
 
 ## 3. GitHub Actions Examples for MLOps
