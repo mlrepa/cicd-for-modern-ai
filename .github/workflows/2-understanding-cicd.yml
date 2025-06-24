@@ -11,7 +11,7 @@ on:
     branches: [ main ]
 
 env:
-  DOCKER_IMAGE_NAME: devops-1-get-started
+  DOCKER_IMAGE_NAME: cicd-for-modern-ai
 
 jobs:
   # Build stage with Docker

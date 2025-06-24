@@ -1,4 +1,4 @@
-# Modern Dockerfile for ML CI/CD examples using uv
+# Modern Dockerfile for CI/CD examples for modern AI & ML projects using uv
 FROM python:3.11-slim
 
 # Set working directory
@@ -24,4 +24,4 @@ RUN uv pip install --system -e .
 COPY . .
 
 # Default command
-CMD ["python", "-c", "print('ML model container with uv is ready!')"] 
+CMD ["python", "-c", "print('Modern AI & ML CI/CD container with uv is ready!')"] 

@@ -7,7 +7,7 @@ stages:
   - deploy
 
 variables:
-  DOCKER_IMAGE_NAME: devops-1-get-started
+  DOCKER_IMAGE_NAME: cicd-for-modern-ai
 
 build_artifacts:
   stage: build

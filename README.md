@@ -87,8 +87,8 @@ These include:
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
-cd devops-1-get-started
+git clone https://github.com/mlrepa/cicd-for-modern-ai
+cd cicd-for-modern-ai
 
 # Install dependencies with uv (recommended - faster and more reliable)
 uv pip install -e .

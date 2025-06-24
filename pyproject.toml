@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "devops-ml-starter"
+name = "cicd-for-modern-ai"
 version = "0.1.0"
-description = "CI/CD examples for machine learning projects"
+description = "CI/CD examples and best practices for modern AI and machine learning projects"
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
@@ -48,13 +48,13 @@ security = [
 
 # All dependencies for CI/CD
 ci = [
-    "devops-ml-starter[dev,security]",
+    "cicd-for-modern-ai[dev,security]",
 ]
 
 [project.urls]
-Homepage = "https://github.com/mlrepa/devops-1-get-started"
-Repository = "https://github.com/mlrepa/devops-1-get-started"
-Documentation = "https://github.com/mlrepa/devops-1-get-started#readme"
+Homepage = "https://github.com/mlrepa/cicd-for-modern-ai"
+Repository = "https://github.com/mlrepa/cicd-for-modern-ai"
+Documentation = "https://github.com/mlrepa/cicd-for-modern-ai#readme"
 
 # Tool configurations
 [tool.black]
@@ -67,7 +67,7 @@ target-version = "py39"
 select = ["E", "F", "I", "N", "W"]
 
 [tool.ruff.isort]
-known-first-party = ["devops_ml_starter"]
+known-first-party = ["cicd_for_modern_ai"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
