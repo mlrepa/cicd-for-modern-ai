@@ -24,6 +24,7 @@ This repository contains example CI/CD configurations for machine learning proje
 
 ### Active Configuration
 - `.gitlab-ci.yml`: The current GitLab CI configuration (copy content from examples to activate)
+- `.github/workflows/github-ci.yml`: Simple GitHub Actions workflow (equivalent to .gitlab-ci.yml approach)
 
 ## Learning Path
 
@@ -120,16 +121,16 @@ git push
 
 **Option 1: Use the Active Configuration (Recommended)**
 ```bash
-# The default workflow is already at .github/workflows/ci.yml
+# The default workflow is already at .github/workflows/github-ci.yml
 # Just customize it for your needs and push
-git add .github/workflows/ci.yml
+git add .github/workflows/github-ci.yml
 git commit -m "Update CI/CD workflow"
 git push
 ```
 
 **Option 2: Choose from Examples**
 1. **Choose an example**: Start with `.github/workflows/1-get-started.yml`
-2. **Copy content**: Copy the content to `.github/workflows/ci.yml` or rename the file
+2. **Copy content**: Copy the content to `.github/workflows/github-ci.yml` or rename the file
 3. **Customize**: Modify the workflow for your specific needs
 4. **Push and run**: Commit your changes to trigger the workflow
 
