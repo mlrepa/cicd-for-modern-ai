@@ -88,9 +88,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
       
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+      
       - name: Install dependencies
         run: |
-          pip install pytest pytest-cov
+          uv pip install --system --requirement pyproject.toml --extra dev
       
       - name: Run comprehensive tests
         run: |
@@ -125,9 +130,14 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+      
       - name: Install security tools
         run: |
-          pip install safety bandit
+          uv pip install --system --requirement pyproject.toml --extra security
       
       - name: Run safety check
         continue-on-error: true
@@ -162,9 +172,14 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+      
       - name: Install ML dependencies
         run: |
-          pip install scikit-learn pandas numpy
+          uv pip install --system --requirement pyproject.toml
       
       - name: Train model
         run: |

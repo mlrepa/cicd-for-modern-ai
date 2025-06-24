@@ -35,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: |
           echo "Installing dependencies with uv..."
-          uv pip install --system -e .
+          uv pip install --system --requirement pyproject.toml
       
       - name: Build step
         run: echo "This job builds something (Docker, packages...)"
@@ -58,7 +58,7 @@ jobs:
           version: "latest"
       
       - name: Install dependencies with dev tools
-        run: uv pip install --system -e .[dev]
+        run: uv pip install --system --requirement pyproject.toml --extra dev
       
       - name: Test step
         run: |
@@ -85,7 +85,7 @@ jobs:
           version: "latest"
       
       - name: Install dependencies
-        run: uv pip install --system -e .
+        run: uv pip install --system --requirement pyproject.toml
       
       - name: Train step
         run: |

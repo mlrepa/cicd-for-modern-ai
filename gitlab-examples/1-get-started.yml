@@ -15,7 +15,7 @@ build_artifacts:
     - export PATH="/root/.cargo/bin:$PATH"
   script:
     - echo "Installing dependencies with uv..."
-    - uv pip install --system -e .
+    - uv pip install --system --requirement pyproject.toml
     - echo "This job builds something (Docker, packages...)"
 
 test_code:
@@ -24,7 +24,7 @@ test_code:
   before_script:
     - curl -LsSf https://astral.sh/uv/install.sh | sh
     - export PATH="/root/.cargo/bin:$PATH"
-    - uv pip install --system -e .[dev]
+    - uv pip install --system --requirement pyproject.toml --extra dev
   script:
     - echo "This job tests something built by the build_artifacts job"
     - echo "Test job is complete"
@@ -35,7 +35,7 @@ train_model:
   before_script:
     - curl -LsSf https://astral.sh/uv/install.sh | sh
     - export PATH="/root/.cargo/bin:$PATH"
-    - uv pip install --system -e .
+    - uv pip install --system --requirement pyproject.toml
   script:
     - echo "This job trains a new model"
     - echo "Model train is complete"

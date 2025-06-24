@@ -2,6 +2,16 @@
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build.targets.wheel]
+# This is an examples repository, not a Python package
+# We only need to define what to include for documentation purposes
+only-include = [
+    "README.md",
+    "gitlab-examples",
+    ".github",
+    "Dockerfile",
+]
+
 [project]
 name = "cicd-for-modern-ai"
 version = "0.1.0"
@@ -9,7 +19,7 @@ description = "CI/CD examples and best practices for modern AI and machine learn
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
-    {name = "MLRepa", email = "info@mlrepa.io"},
+    {name = "MLRepa", email = "info@mlrepa.org"},
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
