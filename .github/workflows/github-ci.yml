@@ -1,7 +1,7 @@
 # Simple GitHub Actions workflow - equivalent to .gitlab-ci.yml simplicity
 # This is the simplest possible version for learning
 
-name: Simple CI/CD Pipeline
+name: github-ci
 
 on:
   push:

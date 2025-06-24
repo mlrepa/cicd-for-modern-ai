@@ -3,7 +3,7 @@
 # Based on GitHub Actions 2024 recommendations
 # Equivalent to gitlab-examples/3-best-practices-gitlab.yml
 
-name: 3 - Best Practices
+name: 3-best-practices-github
 
 on:
   push:

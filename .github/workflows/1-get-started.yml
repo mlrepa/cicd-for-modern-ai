@@ -2,7 +2,7 @@
 # This shows the fundamental concepts of CI/CD pipelines
 # Equivalent to gitlab-examples/1-get-started.yml
 
-name: 1 - Basic Pipeline
+name: 1-get-started
 
 on:
   push:

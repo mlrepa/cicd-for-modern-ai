@@ -2,7 +2,7 @@
 # This shows more advanced concepts like Docker usage and artifacts
 # Equivalent to gitlab-examples/2-understanding-cicd.yml
 
-name: 2 - Docker and Artifacts
+name: 2-understanding-cicd
 
 on:
   push:
