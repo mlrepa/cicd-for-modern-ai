@@ -1,3 +1,6 @@
+# Basic GitLab CI example for beginners
+# This shows the fundamental concepts of CI/CD pipelines
+
 stages:
   - build
   - train
@@ -25,3 +28,6 @@ deploy_model:
   script:
     - echo "This job deploys a model"
     - echo "Model deploy is complete"
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual  # Require manual approval for deployment

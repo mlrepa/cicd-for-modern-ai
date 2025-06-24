@@ -1,3 +1,6 @@
+# GitLab CI example with Docker and artifacts
+# This shows more advanced concepts like Docker usage and artifacts
+
 stages:
   - build
   - train
@@ -8,9 +11,9 @@ variables:
 
 build_artifacts:
   stage: build
-  image: docker:dind
+  image: docker:24.0.5
   services:
-    - docker:dind
+    - docker:24.0.5-dind
   script:
     - echo "Build a Docker image"
     # Build and tag a Docker image
@@ -37,9 +40,9 @@ train_model:
   stage: train
   script:
     - echo "This job trains a new model"
-    # Simulate training by copying model.joblib to the model directory
+    # Simulate training by creating a model file
     - echo "Training model..."
-    - touch model.joblib
+    - echo "model_data" > model.joblib
     - echo "Model train is complete"
   artifacts:
     paths:
@@ -47,8 +50,12 @@ train_model:
 
 deploy_model:
   stage: deploy
+  needs: [train_model]
   script:
     - echo "This job deploys a model"
     # Use the model.joblib from the artifacts
     - ls 
     - echo "Model deploy is complete"
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual  # Require manual approval for deployment

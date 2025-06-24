@@ -1,0 +1,109 @@
+# GitHub Actions workflow with Docker and artifacts
+# This shows more advanced concepts like Docker usage and artifacts
+# Equivalent to gitlab-examples/2-understanding-cicd.yml
+
+name: 2 - Docker and Artifacts
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  DOCKER_IMAGE_NAME: devops-1-get-started
+
+jobs:
+  # Build stage with Docker
+  build_artifacts:
+    name: Build Artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build Docker image
+        run: |
+          echo "Build a Docker image"
+          # Build and tag a Docker image
+          docker pull hello-world
+          docker image tag hello-world:latest $DOCKER_IMAGE_NAME:latest
+          echo $(docker images)
+          # Archive the Docker image
+          docker save -o docker-$DOCKER_IMAGE_NAME.tar $DOCKER_IMAGE_NAME:latest
+      
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: docker-${{ env.DOCKER_IMAGE_NAME }}.tar
+
+  test_code:
+    name: Test Code
+    runs-on: ubuntu-latest
+    needs: build_artifacts
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Download Docker image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-image
+      
+      - name: Test Docker image
+        run: |
+          echo "Test Docker image exists"
+          # Run test - print OK if the Docker image archive exists
+          ls
+          if ls | grep docker-$DOCKER_IMAGE_NAME.tar; then echo "OK"; else echo "NOT OK"; fi
+          echo "Test job is complete"
+
+  # Train stage
+  train_model:
+    name: Train Model
+    runs-on: ubuntu-latest
+    needs: test_code
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Train model
+        run: |
+          echo "This job trains a new model"
+          # Simulate training by creating a model file
+          echo "Training model..."
+          echo "model_data" > model.joblib
+          echo "Model train is complete"
+      
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained-model
+          path: model.joblib
+
+  # Deploy stage
+  deploy_model:
+    name: Deploy Model
+    runs-on: ubuntu-latest
+    needs: train_model
+    if: github.ref == 'refs/heads/main'
+    environment: production  # Requires manual approval
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Download model artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: trained-model
+      
+      - name: Deploy model
+        run: |
+          echo "This job deploys a model"
+          # Use the model.joblib from the artifacts
+          ls
+          echo "Model deploy is complete" 

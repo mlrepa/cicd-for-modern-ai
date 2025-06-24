@@ -1,4 +1,5 @@
-# Example from examples/1-get-started.yml
+# Basic GitLab CI example for beginners (with modern uv dependency management)
+# This shows the fundamental concepts of CI/CD pipelines
 
 stages:
   - build
@@ -7,17 +8,34 @@ stages:
 
 build_artifacts:
   stage: build
+  image: python:3.11-slim
+  before_script:
+    # Install uv for fast dependency management
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    - export PATH="/root/.cargo/bin:$PATH"
   script:
+    - echo "Installing dependencies with uv..."
+    - uv pip install --system -e .
     - echo "This job builds something (Docker, packages...)"
 
 test_code:
   stage: build
+  image: python:3.11-slim
+  before_script:
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    - export PATH="/root/.cargo/bin:$PATH"
+    - uv pip install --system -e .[dev]
   script:
     - echo "This job tests something built by the build_artifacts job"
     - echo "Test job is complete"
 
 train_model:
   stage: train
+  image: python:3.11-slim
+  before_script:
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    - export PATH="/root/.cargo/bin:$PATH"
+    - uv pip install --system -e .
   script:
     - echo "This job trains a new model"
     - echo "Model train is complete"
@@ -27,3 +45,6 @@ deploy_model:
   script:
     - echo "This job deploys a model"
     - echo "Model deploy is complete"
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual  # Require manual approval for deployment
